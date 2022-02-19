@@ -1,22 +1,16 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.util.Locale;
 import javax.swing.*;
-
 
 public class LoginPass extends BlackJack implements ActionListener {
 
-    private static JLabel userLabel;
-    private static JLabel ageLabel;
-
-    private static JCheckBox box;
-
-    private static JTextField userText;
-    private static JTextField ageText;
-    private static JLabel passwordLabel;
-    private static JPasswordField passwordText;
-    private static JButton button;
-    private static JLabel success;
+    static JTextField userText;
+    static JTextField moneyText;
+    static JLabel passwordLabel;
+    static JPasswordField passwordText;
+    static JButton button;
+    static JLabel success;
 
     public static void fun(){
 
@@ -30,35 +24,35 @@ public class LoginPass extends BlackJack implements ActionListener {
 
         panel.setLayout(null);
 
-        JLabel userLabel = new JLabel("user name:");
+        JLabel userLabel = new JLabel("User name:");
         userLabel.setBounds(10, 20, 80, 25);
         panel.add(userLabel);
-        JLabel write = new JLabel("write here the name");
-        write.setBounds(125, 20, 1000 , 25);
+        JLabel write = new JLabel("←");
+        write.setBounds(270, 20, 1000 , 25);
         panel.add(write);
         userText = new JTextField(20);
         userText.setBounds(100, 20, 165, 25);
         panel.add(userText);
 
-        passwordLabel = new JLabel("password:");
+        passwordLabel = new JLabel("Password:");
         passwordLabel.setBounds(10, 50, 80, 25);
         panel.add(passwordLabel);
-        JLabel write2 = new JLabel("write here the password");
-        write2.setBounds(110, 50, 1000 , 25);
+        JLabel write2 = new JLabel("←");
+        write2.setBounds(270, 50, 1000 , 25);
         panel.add(write2);
         passwordText = new JPasswordField();
         passwordText.setBounds(100, 50, 165, 25);
         panel.add(passwordText);
 
-        JLabel ageLabel = new JLabel("age:");
+        JLabel ageLabel = new JLabel("Money($):");
         ageLabel.setBounds(10, 80, 80, 25);
         panel.add(ageLabel);
-        JLabel write3 = new JLabel("write here the age");
-        write3.setBounds(110, 80, 1000 , 25);
+        JLabel write3 = new JLabel("←");
+        write3.setBounds(270, 80, 1000 , 25);
         panel.add(write3);
-        ageText = new JTextField();
-        ageText.setBounds(100, 80, 165, 25);
-        panel.add(ageText);
+        moneyText = new JTextField();
+        moneyText.setBounds(100, 80, 165, 25);
+        panel.add(moneyText);
 
         button = new JButton("Login");
         button.setBounds(10, 130, 80, 25);
@@ -72,16 +66,24 @@ public class LoginPass extends BlackJack implements ActionListener {
         frame.setVisible(true);
     }
     public void actionPerformed(ActionEvent e){
-
         String user = userText.getText();
         String password = passwordText.getText();
+        String money = moneyText.getText();
+
+
+        user = user.replaceAll(" ", "");
+        user = user.toLowerCase();
 
         if (user.length()>0 && password.length()>0){
-            user = user.replaceAll(" ", "");
-            if (true)
-                success.setText("Hello "+user.toLowerCase()+". I hope you will enjoy playing;");
-
-            System.out.println("Hello "+user+". I hope you will enjoy playing;");
+            System.out.println("////////////////////////////////////////////////////");
+            System.out.printf("Your User name: %s\n", user);
+            String str="";
+            for (int i=0; i<password.length(); i++) {
+                str+="*";
+            }
+            System.out.printf("Your Password: %s\n", str);
+            System.out.printf("Your initial money($): %s$\n", money);
+            System.out.println("////////////////////////////////////////////////////");
             System.out.println(".................play here↓ Please wait for two seconds.\n");
 
             try {
@@ -92,15 +94,17 @@ public class LoginPass extends BlackJack implements ActionListener {
             yes();
         }
 
-        if (user.length() == 0 || password.length() == 0) {
-            if (user.length()==0)
-                success.setText("Please write the user name (age you don't have to) !");
-            if (password.length()==0)
-                success.setText("Please write the password (age you don't have to) !");
-            if (user.length() == 0 && password.length() == 0)
-                success.setText("You must write user and password (age you don't have to) !");
+        if (user.length() == 0 || password.length() == 0 || money.length() == 0) {
+
+            if (user.length()<=0)
+                success.setText("Please write the user name !");
+            if (password.length()<=0)
+                success.setText("Please write the password !");
+            if (money.length()<=0)// problem
+                success.setText("You must write the money amount !");
+            if (user.length() <= 0 && password.length() <= 0 && money.length() <= 0)
+                success.setText("You must write user, password and money !");
         }
-        else
-            success.setText("Try again");
+
     }
 }
